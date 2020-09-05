@@ -1,9 +1,18 @@
 const Sauce = require('../models/sauce');
 const fs = require('fs');
 
+const regex = /^[a-zA-Z0-9 _.,'()&]+$/;
+
 exports.createSauce = (req, res, next) => {
   const sauceObject = JSON.parse(req.body.sauce);
   delete sauceObject._id;
+
+  // Si le Regex n'est pas valide
+  if (!regex.test(sauceObject.name) || !regex.test(sauceObject.manufacturer) ||
+        !regex.test(sauceObject.description) || !regex.test(sauceObject.mainPepper) ||
+        !regex.test(sauceObject.heat)) {
+        return res.status(500).json({ error: 'Des champs contiennent des caractères invalides' });
+    }
   const sauce = new Sauce({
     ...sauceObject,
     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
