@@ -1,3 +1,4 @@
+//plugin Npm Node.js (avec bcryp pour has)
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 

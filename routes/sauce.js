@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 
-// Middlewares
+// Middlewares avec auth pour sécuriser les connexions et Multher pour la gestion des images
 const auth = require('../middleware/auth');
 const multer = require('../middleware/multer-config');
 

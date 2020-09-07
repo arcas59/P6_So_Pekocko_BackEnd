@@ -1,8 +1,11 @@
+//Import du modèle Sauce
 const Sauce = require('../models/sauce');
+// Package pour la suppression
 const fs = require('fs');
-
+// Regex afin de limiter les saisies de caractères speciaux dans les champs
 const regex = /^[a-zA-Z0-9 _.,'()&]+$/;
 
+// Création d'une nouvelle sauce
 exports.createSauce = (req, res, next) => {
   const sauceObject = JSON.parse(req.body.sauce);
   delete sauceObject._id;
@@ -13,6 +16,7 @@ exports.createSauce = (req, res, next) => {
         !regex.test(sauceObject.heat)) {
         return res.status(500).json({ error: 'Des champs contiennent des caractères invalides' });
     }
+  // Sinon la sauce est créée
   const sauce = new Sauce({
     ...sauceObject,
     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
@@ -26,6 +30,7 @@ exports.createSauce = (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 };
 
+// Modification de la Sauce
 exports.updateSauce = (req, res, next) => {
   const sauceObject = req.file ?
   {
@@ -38,18 +43,21 @@ exports.updateSauce = (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 };
 
+// Récupération de toutes les sauces crées
 exports.getAllSauces = (req, res, next) => {
   Sauce.find()
     .then(sauces => res.status(200).json(sauces))
     .catch(error => res.status(400).json({ error }));
 };
 
+// Récupération d'une seule sauce
 exports.getOneSauce = (req, res, next) => {
   Sauce.findOne({_id: req.params.id})
     .then((sauce) => {res.status(200).json(sauce);})
     .catch((error) => {res.status(404).json({error: error});});
 };
 
+// Suppression de la sauce
 exports.deleteSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id })
     .then(sauce => {
@@ -63,6 +71,7 @@ exports.deleteSauce = (req, res, next) => {
     .catch(error => res.status(500).json({ error }));
 };
 
+// Implantation des Like et Dislike concernant les sauces
 exports.likeSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id })
  .then(sauce => {
@@ -77,7 +86,6 @@ exports.likeSauce = (req, res, next) => {
                  .catch( error => res.status(400).json({ error }))
              break;
          case 0:
-             //Cas -1 Like :
              if (sauce.usersLiked.find(user => user === req.body.userId)) {
                  Sauce.updateOne({ _id : req.params.id }, {
                      $inc: {likes:-1},

@@ -1,5 +1,7 @@
+//plugin Npm Node.js
 const mongoose = require('mongoose');
 
+// Modèle des sauces avec le type de données
 const sauceSchema = mongoose.Schema({
     userId: { type: String, required: true },
     name: { type: String, required: true },
