@@ -14,7 +14,8 @@ function encrypt(text) {
  encrypted = Buffer.concat([encrypted, cipher.final()]);
 
  return iv.toString('hex') + ':' + encrypted.toString('hex');
-}
+};
+
 // Permets de déchiffrer les données
 function decrypt(text) {
  let textParts = text.split(':');
@@ -26,7 +27,7 @@ function decrypt(text) {
  decrypted = Buffer.concat([decrypted, decipher.final()]);
 
  return decrypted.toString();
-}
+};
 
 // On exporte le module
 module.exports = { decrypt, encrypt };

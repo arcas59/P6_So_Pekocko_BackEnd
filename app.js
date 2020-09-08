@@ -5,11 +5,6 @@ const mongoose = require('mongoose');
 mongoose.set('useCreateIndex', true);
 const path = require('path');
 
-// Masquage des données grâce au package DOTENV
-require("dotenv").config();
-const ID = process.env.ID;
-const MDP = process.env.MDP;
-
 // Connection à la base de donnée Mongoose
 mongoose.connect('mongodb+srv://admin:adrien@cluster0.yq4zd.mongodb.net/test?retryWrites=true&w=majority',
   { useNewUrlParser: true,
