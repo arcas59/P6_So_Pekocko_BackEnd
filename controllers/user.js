@@ -1,12 +1,16 @@
-//plugin Npm Node.js (avec bcryp pour has)
+//plugin Npm Node.js (avec bcryp pour hasher le mdp et jwt pour le token d'authentification)
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+// Import du modèle User
 const User = require('../models/user');
 
+
+// Création d'un nouvel utilisateur
 exports.signup = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
-      .then(hash => {
+      .then(
+        hash => {
           const user = new User({
               email: req.body.email,
               password: hash
@@ -18,6 +22,7 @@ exports.signup = (req, res, next) => {
       .catch(error => res.status(500).json({ error }));
   };
 
+  // Récupération d'un utilisateur déja existant dans la base de donnée
   exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
       .then(user => {
