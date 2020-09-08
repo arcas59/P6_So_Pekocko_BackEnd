@@ -1,13 +1,14 @@
 //plugin Npm Node.js
 const multer = require('multer');
 
-
+// Ajout des formats d'images
 const MIME_TYPES = {
   'image/jpg': 'jpg',
   'image/jpeg': 'jpg',
   'image/png': 'png'
 };
 
+// Constante qui permets d'enregistrer l'image
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, 'images');
