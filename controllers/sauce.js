@@ -3,7 +3,7 @@ const Sauce = require('../models/sauce');
 // Package pour la suppression
 const fs = require('fs');
 // Regex afin de limiter les saisies de caractères speciaux dans les champs
-const regex = /^[a-zA-Z0-9 _.,'()&]+$/;
+const regex = /[a-zA-Z0-9 _.,'’(Ééèàû)&]+$/;
 
 // Création d'une nouvelle sauce
 exports.createSauce = (req, res, next) => {
